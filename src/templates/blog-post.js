@@ -5,43 +5,46 @@ import { Helmet } from "react-helmet"
 
 import Layout from 'components/Layout';
 import Map from 'components/Map';
+import L from 'leaflet';
 
 const DEFAULT_ZOOM = 15;
 
 function bbox(route) {
   var result = [[Infinity, Infinity], [-Infinity, -Infinity]];
   route.geometry.coordinates.forEach(coord => {
-      if (result[0][0] > coord[0]) {
-          result[0][0] = coord[0];
+      if (result[0][0] > coord[1]) {
+          result[0][0] = coord[1];
       }
-      if (result[0][1] > coord[1]) {
-          result[0][1] = coord[1];
+      if (result[0][1] > coord[0]) {
+          result[0][1] = coord[0];
       }
-      if (result[1][0] < coord[0]) {
-          result[1][0] = coord[0];
+      if (result[1][0] < coord[1]) {
+          result[1][0] = coord[1];
       }
-      if (result[1][1] < coord[1]) {
-          result[1][1] = coord[1];
+      if (result[1][1] < coord[0]) {
+          result[1][1] = coord[0];
       }
   });
   return result;
 }
 
-
 export default function Template({ data }) {
   const { markdownRemark: post } = data // data.markdownRemark holds your post data
   const { gpx: route } = data // data.gpxFileData holds the GPX information to plot
 
-  const markerRef = useRef();
+  const StartMarkerRef = useRef();
+  const EndMarkerRef = useRef();
 
   var bounds = bbox(route.geojson._0)
 
-  const CENTER = [52.92038678191602,-1.2134187016636133];
+  var tmp = route.geojson._0.geometry.coordinates[0];
+  const RouteStart = [tmp[1], tmp[0]];
+  tmp = route.geojson._0.geometry.coordinates[route.geojson._0.geometry.coordinates.length-1]
+  const RouteEnd = [tmp[1], tmp[0]];
   
   const mapSettings = {
-    center: CENTER,
+    bounds: bounds,
     defaultBaseMap: 'OpenStreetMap',
-    zoom: DEFAULT_ZOOM,
   };
 
   return (
@@ -55,7 +58,8 @@ export default function Template({ data }) {
 
 
     <Map {...mapSettings}>
-      <Marker ref={markerRef} position={CENTER} />
+      <Marker ref={StartMarkerRef} position={RouteStart} />
+      <Marker ref={EndMarkerRef} position={RouteEnd} />
        <GeoJSON data={route.geojson._0} 
       style={() => ({
         color: '#F72A2A',
