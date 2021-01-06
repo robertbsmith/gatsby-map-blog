@@ -60,11 +60,5 @@ module.exports = {
       }
     },
     `gatsby-transformer-gpx`,
-    {
-      resolve: `gatsby-plugin-typography`,
-      options: {
-        pathToConfigModule: `src/utils/typography`,
-      },
-    },
   ],
 };
