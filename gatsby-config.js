@@ -39,5 +39,26 @@ module.exports = {
         icon: 'src/assets/images/react-leaflet-icon.png',
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "gpx",
+        path: `${__dirname}/src/gpx`,
+      }
+    },
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: [] // just in case those previously mentioned remark plugins sound cool :)
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "pages",
+        path: `${__dirname}/src/pages`,
+      }
+    },
+    `gatsby-transformer-gpx`,
   ],
 };

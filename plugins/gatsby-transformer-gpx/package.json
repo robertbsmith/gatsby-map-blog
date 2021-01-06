@@ -1,0 +1,20 @@
+{
+  "name": "gatsby-transformer-gpx",
+  "version": "0.0.1",
+  "description": "Gatsby transformer plugin for GPX format files, converts to GeoJSON format",
+  "keywords": [
+    "gatsby",
+    "gpx",
+    "geojson",
+    "gatsby-plugin"
+  ],
+  "author": "Robert Smith",
+  "license": "MIT",
+  "repository": "https://github.com/charnz/gatsby-transformer-kml",
+  "dependencies": {
+    "@tmcw/togeojson": "^4.3.0",
+    "togeojson": "^0.16.0",
+    "xmldom": "^0.1.27"
+  },
+  "devDependencies": {}
+}
